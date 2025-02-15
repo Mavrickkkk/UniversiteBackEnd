@@ -12,6 +12,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniversiteDomain", "Univers
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniversiteDomainUnitTests", "UniversiteDomainUnitTests\UniversiteDomainUnitTests.csproj", "{7EEEB0F6-5F6B-4C65-84CA-8E42E6988022}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniversiteEFDataProvider", "UniversiteEFDataProvider\UniversiteEFDataProvider.csproj", "{3F0E1CCD-5F3E-4641-ABA7-F28AD45DDA03}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniversiteRestApi", "UniversiteRestApi\UniversiteRestApi.csproj", "{4247E5CF-22AC-4010-AE09-56504DA40BA6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,6 +24,8 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{C925608B-0555-4144-B8D1-2231A752AD79} = {46C493B7-F48D-479E-AF83-86D12E3C4ACA}
 		{7EEEB0F6-5F6B-4C65-84CA-8E42E6988022} = {7348ED49-58DB-4DCE-AC45-EAEDD76F5F5A}
+		{3F0E1CCD-5F3E-4641-ABA7-F28AD45DDA03} = {6E1BB56A-EE8F-46FB-8513-393CDA8DA202}
+		{4247E5CF-22AC-4010-AE09-56504DA40BA6} = {C936BD52-6926-4543-A30A-305DC6BA9FF5}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{C925608B-0555-4144-B8D1-2231A752AD79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -30,5 +36,13 @@ Global
 		{7EEEB0F6-5F6B-4C65-84CA-8E42E6988022}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7EEEB0F6-5F6B-4C65-84CA-8E42E6988022}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7EEEB0F6-5F6B-4C65-84CA-8E42E6988022}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F0E1CCD-5F3E-4641-ABA7-F28AD45DDA03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F0E1CCD-5F3E-4641-ABA7-F28AD45DDA03}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F0E1CCD-5F3E-4641-ABA7-F28AD45DDA03}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F0E1CCD-5F3E-4641-ABA7-F28AD45DDA03}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4247E5CF-22AC-4010-AE09-56504DA40BA6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4247E5CF-22AC-4010-AE09-56504DA40BA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4247E5CF-22AC-4010-AE09-56504DA40BA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4247E5CF-22AC-4010-AE09-56504DA40BA6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
