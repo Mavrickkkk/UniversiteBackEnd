@@ -1,16 +1,12 @@
 using UniversiteDomain.DataAdapters.DataAdaptersFactory;
 using UniversiteDomain.Entities;
-//using UniversiteDomain.Entities.SecurityEntities;
 using UniversiteDomain.UseCases.EtudiantUseCases.Create;
-using UniversiteDomain.UseCases.NoteUseCases;
-using UniversiteDomain.UseCases.UeUseCases;
-using UniversiteDomain.UseCases.NoteUseCases.Create;
+using UniversiteDomain.UseCases.NotesUseCases.Create;
 using UniversiteDomain.UseCases.ParcoursUseCases.Create;
 using UniversiteDomain.UseCases.ParcoursUseCases.EtudiantDansParcours;
 using UniversiteDomain.UseCases.ParcoursUseCases.UeDansParcours;
+using UniversiteDomain.UseCases.SecurityUseCases.Create;
 using UniversiteDomain.UseCases.UeUseCases.Create;
-
-//using UniversiteDomain.UseCases.SecurityUseCases;
 
 namespace UniversiteDomain.JeuxDeDonnees;
 
@@ -25,7 +21,8 @@ public class BasicBdBuilder(IRepositoryFactory repositoryFactory) : BdBuilder(re
         new Etudiant { Id=3,NumEtud = "62830483", Nom = "Barassi", Prenom = "Pierre-Louis", Email = "pierre-louis.barassi@etud.u-picardie.fr" },
         new Etudiant { Id=4,NumEtud = "J6HZK922", Nom = "Jelong", Prenom = "Antony", Email = "antony.jelong@etud.u-picardie.fr" },
         new Etudiant { Id=5,NumEtud = "PAD89345", Nom = "Akki", Prenom = "Pita", Email = "pita.akki@etud.u-picardie.fr" },
-        new Etudiant { Id=6,NumEtud = "RG8647FF", Nom = "Mauvaka", Prenom = "Peato", Email = "peato.mauvaka@etud.u-picardie.fr" }
+        new Etudiant { Id=6,NumEtud = "RG8647FF", Nom = "Mauvaka", Prenom = "Peato", Email = "peato.mauvaka@etud.u-picardie.fr" },
+        new Etudiant { Id=7,NumEtud = "GCLEM740", Nom = "Clement", Prenom = "Delepaut", Email = "delepaut.clement@etud.u-picardie.fr" }
     ];
     private struct UserNonEtudiant
     {
@@ -39,7 +36,8 @@ public class BasicBdBuilder(IRepositoryFactory repositoryFactory) : BdBuilder(re
         new UserNonEtudiant { UserName = "plouisberquez@gmail.com", Email = "plouisberquez@gmail.com", Role = "Responsable" },
         new UserNonEtudiant { UserName = "jabin.julian.univ@gmail.com", Email = "jabin.julian.univ@gmail.com", Role = "Responsable" },
         new UserNonEtudiant { UserName = "mehdy.chk@outlook.fr", Email = "mehdy.chk@outlook.fr", Role = "Responsable" },
-        new UserNonEtudiant { UserName = "stephanie.dertin@u-picardie.fr", Email = "stephanie.dertin@u-picardie.fr", Role = "Scolarite" }
+        new UserNonEtudiant { UserName = "stephanie.dertin@u-picardie.fr", Email = "stephanie.dertin@u-picardie.fr", Role = "Scolarite" },
+        new UserNonEtudiant { UserName = "ClementDelepaut", Email = "delepaut.clement@gmail.com", Role = "Scolarite" },
     ];
 
     private readonly Parcours[] _parcours =
@@ -72,7 +70,8 @@ public class BasicBdBuilder(IRepositoryFactory repositoryFactory) : BdBuilder(re
         new Inscription { EtudiantId = 3, ParcoursId = 1 },
         new Inscription { EtudiantId = 4, ParcoursId = 1 },
         new Inscription { EtudiantId = 5, ParcoursId = 3 },
-        new Inscription { EtudiantId = 6, ParcoursId = 4 }
+        new Inscription { EtudiantId = 6, ParcoursId = 4 },
+        new Inscription { EtudiantId = 7, ParcoursId = 4 }
     ];
 
     private struct UeDansParcours
@@ -101,7 +100,6 @@ public class BasicBdBuilder(IRepositoryFactory repositoryFactory) : BdBuilder(re
     private readonly Note[] _notes =
     [
         new Note { UeId = 1, EtudiantId = 2, Valeur = 12 },
-        new Note { UeId = 1, EtudiantId = 3, Valeur = (float)8.5 },
         new Note { UeId = 1, EtudiantId = 4, Valeur = 16 },
         new Note { UeId = 2, EtudiantId = 2, Valeur = 14 },
         new Note { UeId = 2, EtudiantId = 3, Valeur = 6 },
@@ -157,25 +155,20 @@ public class BasicBdBuilder(IRepositoryFactory repositoryFactory) : BdBuilder(re
     {
         foreach( var note in _notes)
         {
-            await new CreateNoteUseCase(repositoryFactory).ExecuteAsync(note.EtudiantId, note.UeId, note.Valeur);
+            await new CreateNotesUseCase(repositoryFactory).ExecuteAsync(note.Valeur, note.EtudiantId,note.UeId);
         }
     }
     
     protected override async Task BuildRolesAsync()
     {
-				/*
-				// A décommenter quand on aura rajouté les rôles
         // Création des rôles dans la table aspnetroles
         await new CreateUniversiteRoleUseCase(repositoryFactory).ExecuteAsync(Roles.Responsable);
         await new CreateUniversiteRoleUseCase(repositoryFactory).ExecuteAsync(Roles.Scolarite);
         await new CreateUniversiteRoleUseCase(repositoryFactory).ExecuteAsync(Roles.Etudiant);
-				*/
     }
 
     protected override async Task BuildUsersAsync()
     {
-				/*
-				// A décommenter quand on aura rajouté les Users
         CreateUniversiteUserUseCase uc = new CreateUniversiteUserUseCase(repositoryFactory);
         // Création des étudiants
         foreach (var etudiant in _etudiants)
@@ -188,6 +181,5 @@ public class BasicBdBuilder(IRepositoryFactory repositoryFactory) : BdBuilder(re
         {
             await uc.ExecuteAsync(user.Email, user.Email, this.Password, user.Role, null);
         }
-				*/
     }
 }

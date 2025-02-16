@@ -7,6 +7,7 @@ namespace UniversiteEFDataProvider.Repositories;
 
 public class EtudiantRepository(UniversiteDbContext context) : Repository<Etudiant>(context), IEtudiantRepository
 {
+    
     public async Task AffecterParcoursAsync(long idEtudiant, long idParcours)
     {
         ArgumentNullException.ThrowIfNull(Context.Etudiants);
@@ -21,96 +22,65 @@ public class EtudiantRepository(UniversiteDbContext context) : Repository<Etudia
     {
         await AffecterParcoursAsync(etudiant.Id, parcours.Id); 
     }
-    
-    public async Task<Etudiant> AddNoteAsync(long idEtudiant, long idNote)
+    public async Task<Etudiant> AddNoteAsync(long Idetudiant, long Idnote)
     {
-        var etudiant = await Context.Etudiants.FindAsync(idEtudiant);
-        var note = await Context.Notes.FindAsync(idNote);
-        if (etudiant == null || note == null) throw new Exception("Étudiant ou Note introuvable.");
-    
-        etudiant.Notes.Add(note);
+        ArgumentNullException.ThrowIfNull(Context.Etudiants);
+        ArgumentNullException.ThrowIfNull(Context.Notes);
+        Etudiant e = (await Context.Etudiants.FindAsync(Idetudiant))!;
+        Notes n = (await Context.Notes.FindAsync(Idnote))!;
+        e.NotesObtenues.Add(n);
         await Context.SaveChangesAsync();
-        return etudiant;
+        return e;
     }
+    public async Task<Etudiant> AddNoteAsync(long IdEtudiant, long[] IdNotes)
+    {
+        ArgumentNullException.ThrowIfNull(Context.Etudiants);
+        ArgumentNullException.ThrowIfNull(Context.Notes);
 
-    public async Task<Etudiant> AddNoteAsync(Etudiant etudiant, Note note)
+        Etudiant e = (await Context.Etudiants.FindAsync(IdEtudiant))!;
+        List<Notes> notes = new List<Notes>();
+
+        foreach (var id in IdNotes)
+        {
+            Notes note = (await Context.Notes.FindAsync(id))!;
+            notes.Add(note);
+        }
+
+        e.NotesObtenues.AddRange(notes);
+        await Context.SaveChangesAsync();
+        return e;
+    }
+    
+    public async Task<Etudiant> AddNoteAsync(Etudiant etudiant, Notes note)
     {
         return await AddNoteAsync(etudiant.Id, note.Id);
     }
-
-    public async Task<Etudiant> AddNoteAsync(Etudiant? etudiant, List<Note> notes)
-    {
-        if (etudiant == null) throw new ArgumentNullException(nameof(etudiant));
     
-        foreach (var note in notes)
-            etudiant.Notes.Add(note);
-
-        await Context.SaveChangesAsync();
-        return etudiant;
+    public async Task<Etudiant> AddNoteAsync(Etudiant? etudiant, List<Notes> notes)
+    {
+        long[] noteIds = notes.Select(n => n.Id).ToArray();
+        return await AddNoteAsync(etudiant.Id, noteIds);
+    }
+    
+    public async Task<Etudiant?> FindEtudiantCompletAsync(long idEtudiant)
+    {
+        ArgumentNullException.ThrowIfNull(Context.Etudiants);
+        return await Context.Etudiants.Include(e => e.NotesObtenues).ThenInclude(n=>n.Ue).Include(p => p.ParcoursSuivi).FirstOrDefaultAsync(e => e.Id == idEtudiant);
     }
 
-    public async Task<Etudiant> AddNoteAsync(long idEtudiant, long[] idNotes)
+    public async Task<List<Etudiant>> FindEtudiantsByNumUeAsync(string numUe)
     {
-        var etudiant = await Context.Etudiants.FindAsync(idEtudiant);
-        var notes = await Context.Notes.Where(n => idNotes.Contains(n.Id)).ToListAsync();
-
-        if (etudiant == null) throw new Exception("Étudiant introuvable.");
-
-        foreach (var note in notes)
-        {
-            etudiant.Notes.Add(note);
-        }
-
-        await Context.SaveChangesAsync();
-        return etudiant;
-    }
-    public async Task<Etudiant> AddUeAsync(long idEtudiant, long idUe)
-    {
-        var etudiant = await Context.Etudiants.FindAsync(idEtudiant);
-        var ue = await Context.Ues.FindAsync(idUe);
-
-        if (etudiant == null || ue == null) throw new Exception("Étudiant ou UE introuvable.");
-
-        etudiant.Ues.Add(ue);
-        await Context.SaveChangesAsync();
-        return etudiant;
-    }
-    public async Task<Etudiant> AddUeAsync(Etudiant etudiant, Ue ue)
-    {
-        return await AddUeAsync(etudiant.Id, ue.Id);
-    }
-    public async Task<Etudiant> AddUeAsync(Etudiant? etudiant, List<Ue> ues)
-    {
-        if (etudiant == null) throw new ArgumentNullException(nameof(etudiant));
-
-        foreach (var ue in ues)
-        {
-            etudiant.Ues.Add(ue);
-        }
-
-        await Context.SaveChangesAsync();
-        return etudiant;
-    }
-    public async Task<Etudiant> AddUeAsync(long idEtudiant, long[] idUes)
-    {
-        var etudiant = await Context.Etudiants.FindAsync(idEtudiant);
-        var ues = await Context.Ues.Where(u => idUes.Contains(u.Id)).ToListAsync();
-
-        if (etudiant == null) throw new Exception("Étudiant introuvable.");
-
-        etudiant.Ues.AddRange(ues);
-        await Context.SaveChangesAsync();
-        return etudiant;
-    }
-    public async Task<Etudiant?> GetByNumEtudAsync(string numEtud)
-    {
-        return await Context.Etudiants
-            .FirstOrDefaultAsync(e => e.NumEtud == numEtud);
-    }
-    public async Task<IEnumerable<Etudiant>> GetByParcoursAsync(long idParcours)
-    {
-        return await Context.Etudiants
-            .Where(e => e.ParcoursSuivi!.Id == idParcours)
+        ArgumentNullException.ThrowIfNull(Context.Etudiants);
+        return await Context.Etudiants.Include(e => e.ParcoursSuivi)
+            .ThenInclude(p => p.UesEnseignees)
+            .Include(e => e.NotesObtenues)
+            .ThenInclude(n => n.Ue)
+            .Where(e => e.ParcoursSuivi.UesEnseignees.Any(n => n.NumeroUe == numUe))
             .ToListAsync();
+        /*  Recherche seulement les etudiants avec des notes dans l'ue
+        return await Context.Etudiants.Include(e => e.NotesObtenues)
+            .ThenInclude(n => n.Ue)
+            .Where(e => e.NotesObtenues.Any(n => n.Ue.NumeroUe == numUe))
+            .ToListAsync();*/
     }
 }

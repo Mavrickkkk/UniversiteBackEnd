@@ -1,5 +1,6 @@
 namespace UniversiteDomain.Exceptions.EtudiantExceptions;
 
+[Serializable]
 public class EtudiantNotFoundException : Exception
 {
     public EtudiantNotFoundException() : base() { }

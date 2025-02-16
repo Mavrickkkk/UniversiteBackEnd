@@ -8,14 +8,14 @@ public class Etudiant
     public string Prenom { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;
 
+    // OneToMany : un étudiant a plusieurs notes
+    public List<Notes> NotesObtenues { get; set; } = new();
+    
     // ManyToOne : l'étudiant est inscrit dans un parcours
     public Parcours? ParcoursSuivi { get; set; } = null;
-
+    
     public override string ToString()
     {
         return $"ID {Id} : {NumEtud} - {Nom} {Prenom} inscrit en "+ParcoursSuivi;
     }
-    public ICollection<Note> Notes { get; set; } = new List<Note>();
-    public ICollection<Note> NotesObtenues { get; set; } = new List<Note>();
-    public List<Ue> Ues { get; set; } = new List<Ue>();
 }

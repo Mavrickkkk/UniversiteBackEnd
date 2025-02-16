@@ -1,17 +1,21 @@
+using Microsoft.AspNetCore.Identity;
 using UniversiteDomain.DataAdapters;
 using UniversiteDomain.DataAdapters.DataAdaptersFactory;
-using UniversiteEFDataProvider.Repositories;
 using UniversiteEFDataProvider.Data;
-using UniversiteDomain.Entities;
+using UniversiteEFDataProvider.Entities;
+using UniversiteEFDataProvider.Repositories;
 
 namespace UniversiteEFDataProvider.RepositoryFactories;
 
-public class RepositoryFactory(UniversiteDbContext context) : IRepositoryFactory
+public class RepositoryFactory (UniversiteDbContext context, UserManager<UniversiteUser> userManager, RoleManager<UniversiteRole> roleManager)
+    : IRepositoryFactory
 {
     private IParcoursRepository? _parcours;
     private IEtudiantRepository? _etudiants;
     private IUeRepository? _ues;
-    private INoteRepository? _notes;
+    private INotesRepository? _notes;
+    private IUniversiteRoleRepository? _roles;
+    private IUniversiteUserRepository? _users;
     
     public IParcoursRepository ParcoursRepository()
     {
@@ -40,45 +44,44 @@ public class RepositoryFactory(UniversiteDbContext context) : IRepositoryFactory
         return _ues;
     }
 
-    public INoteRepository NoteRepository()
+    public INotesRepository NotesRepository()
     {
         if (_notes == null)
         {
-            _notes = new NoteRepository(context ?? throw new InvalidOperationException());
+            _notes = new NotesRepository(context ?? throw new InvalidOperationException());
         }
         return _notes;
-    }
 
+    }
+    
+    public IUniversiteRoleRepository UniversiteRoleRepository()
+    {
+        if (_roles == null)
+        { 
+            _roles = new UniversiteRoleRepository(context ?? throw new InvalidOperationException(), roleManager);
+        }
+        return _roles;
+    }
+    
+    public IUniversiteUserRepository UniversiteUserRepository()
+    {
+        if (_users == null)
+        { 
+            _users = new UniversiteUserRepository(context ?? throw new InvalidOperationException(), userManager, roleManager);
+        }
+        return _users;
+    }
+       
     public async Task SaveChangesAsync()
     {
-        await context.SaveChangesAsync();
+        context.SaveChangesAsync().Wait();
     }
-
     public async Task EnsureCreatedAsync()
     {
-        await context.Database.EnsureCreatedAsync();
+        context.Database.EnsureCreated();
     }
-
     public async Task EnsureDeletedAsync()
     {
-        await context.Database.EnsureDeletedAsync();
-    }
-
-    public async Task<Parcours> CreateAsync(Parcours parcours)
-    {
-        if (parcours == null) throw new ArgumentNullException(nameof(parcours));
-
-        context.Parcours.Add(parcours);
-        await context.SaveChangesAsync();
-        return parcours;
-    }
-
-    public async Task<object> FindByConditionAsync(Func<object, bool> func)
-    {
-        if (func == null) throw new ArgumentNullException(nameof(func));
-
-        // Recherche d'un objet correspondant à la condition
-        var result = context.Set<object>().Where(func).FirstOrDefault();
-        return result ?? throw new InvalidOperationException("Aucun objet trouvé correspondant à la condition.");
+        context.Database.EnsureDeleted();
     }
 }
