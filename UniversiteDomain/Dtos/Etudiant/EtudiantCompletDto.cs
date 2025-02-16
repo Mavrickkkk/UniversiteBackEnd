@@ -31,6 +31,14 @@ public class EtudiantCompletDto
     public Etudiant ToEntity()
     {
         List<Notes> notes = NoteAvecUeDto.ToEntities(NotesObtenues);
-        return new Etudiant {Id = this.Id, NumEtud = this.NumEtud, Nom = this.Nom, Prenom = this.Prenom, Email = this.Email, NotesObtenues = notes};
+        return new Etudiant
+        {
+            Id = this.Id, 
+            NumEtud = this.NumEtud, 
+            Nom = this.Nom, 
+            Prenom = this.Prenom, 
+            Email = this.Email, 
+            NotesObtenues = notes
+        };
     }
 }

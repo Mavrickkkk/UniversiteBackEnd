@@ -77,10 +77,5 @@ public class EtudiantRepository(UniversiteDbContext context) : Repository<Etudia
             .ThenInclude(n => n.Ue)
             .Where(e => e.ParcoursSuivi.UesEnseignees.Any(n => n.NumeroUe == numUe))
             .ToListAsync();
-        /*  Recherche seulement les etudiants avec des notes dans l'ue
-        return await Context.Etudiants.Include(e => e.NotesObtenues)
-            .ThenInclude(n => n.Ue)
-            .Where(e => e.NotesObtenues.Any(n => n.Ue.NumeroUe == numUe))
-            .ToListAsync();*/
     }
 }

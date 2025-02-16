@@ -28,6 +28,11 @@ public class UeDto
     
     public Ue ToEntity()
     {
-        return new Ue {Id = this.Id, NumeroUe = this.NumeroUe, Intitule = this.Intitule};
+        return new Ue
+        {
+            Id = this.Id, 
+            NumeroUe = this.NumeroUe, 
+            Intitule = this.Intitule
+        };
     }
 }

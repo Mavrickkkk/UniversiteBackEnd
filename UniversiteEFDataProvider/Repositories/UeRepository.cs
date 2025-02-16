@@ -7,7 +7,6 @@ namespace UniversiteEFDataProvider.Repositories;
 
 public class UeRepository(UniversiteDbContext context) : Repository<Ue>(context), IUeRepository
 {
-    /* ------ Normal Version ------*/
     public async Task<Ue> AddNoteAsync(long idUe, long idNote)
     {
         ArgumentNullException.ThrowIfNull(Context.Ues);
@@ -24,7 +23,6 @@ public class UeRepository(UniversiteDbContext context) : Repository<Ue>(context)
         return await AddNoteAsync(ue.Id, note.Id);
     }
     
-    /* ------ Lists Version ------*/
 
     public async Task<Ue> AddNoteAsync(long Idue, long[] Idnote)
     {

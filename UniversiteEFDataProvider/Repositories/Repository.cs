@@ -47,12 +47,10 @@ public abstract class Repository<T>(UniversiteDbContext context) : IRepository<T
         await Context.SaveChangesAsync();
     }
     
-    // Clé primaire non composée
     public async Task<T?> FindAsync(long id)
     {
         return await Context.Set<T>().FindAsync(id);
     }
-    // Clé primaire composée
     public async Task<T?> FindAsync(params object[] keyValues)
     {
         return await Context.Set<T>().FindAsync(keyValues);

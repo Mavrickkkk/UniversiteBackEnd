@@ -19,9 +19,4 @@ public class DeleteNoteUseCase(IRepositoryFactory factory)
         INotesRepository notesRepository = factory.NotesRepository();
         ArgumentNullException.ThrowIfNull(notesRepository);
     }
-    
-    public bool IsAuthorized(string role)
-    {
-        return role.Equals(Roles.Scolarite);
-    }
 }

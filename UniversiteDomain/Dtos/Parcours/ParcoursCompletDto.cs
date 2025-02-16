@@ -43,6 +43,11 @@ public class ParcoursCompletDto
     
     public Parcours ToEntity()
     {
-        return new Parcours {Id = this.Id, NomParcours = this.NomParcours, AnneeFormation = this.AnneeFormation};
+        return new Parcours
+        {
+            Id = this.Id, 
+            NomParcours = this.NomParcours, 
+            AnneeFormation = this.AnneeFormation
+        };
     }
 }

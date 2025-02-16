@@ -12,7 +12,6 @@ public class DeleteParcoursUseCase(IRepositoryFactory factory)
         var etudiantRepository = factory.EtudiantRepository();
         var etudiants = await etudiantRepository.FindByConditionAsync(e => e.ParcoursSuivi.Id == idParcours);
 
-        // Update each Etudiant to set ParcoursSuiviId to NULL
         foreach (var etudiant in etudiants)
         {
             etudiant.ParcoursSuivi = null;

@@ -32,6 +32,13 @@ public class EtudiantDto
     
     public Etudiant ToEntity()
     {
-        return new Etudiant {Id = this.Id, NumEtud = this.NumEtud, Nom = this.Nom, Prenom = this.Prenom, Email = this.Email};
+        return new Etudiant
+        {
+            Id = this.Id, 
+            NumEtud = this.NumEtud, 
+            Nom = this.Nom, 
+            Prenom = this.Prenom, 
+            Email = this.Email
+        };
     }
 }

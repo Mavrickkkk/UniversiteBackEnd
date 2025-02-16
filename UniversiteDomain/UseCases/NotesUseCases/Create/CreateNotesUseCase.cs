@@ -37,9 +37,7 @@ public class CreateNotesUseCase(IRepositoryFactory repositoryFactory)
         ArgumentNullException.ThrowIfNull(note.Etudiant);
         ArgumentNullException.ThrowIfNull(note.Ue);
         ArgumentNullException.ThrowIfNull(repositoryFactory);
-        
-        
-        // Valeur note entre 0 et 20
+
         if (note.Valeur < 0 || note.Valeur > 20) throw new InvalidValueNoteException(note.Valeur + " n'est pas entre 0 et 20");
         
     }

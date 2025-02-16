@@ -6,10 +6,12 @@ public class Ue
     public string NumeroUe { get; set; } = String.Empty;
     public string Intitule { get; set; } = String.Empty;
     
-    // ManyToMany : une Ue est enseignée dnas plusieurs parcours
+    // ManyToMany
+    // Une Ue peut être enseignée dans différents parcours
     public List<Parcours>? EnseigneeDans { get; set; } = new();
     
-    // OneToMany : une UE a plusieurs notes
+    // OneToMany
+    // Une UE contiens plusieurs notes
     public List<Notes> Notes { get; set; } = new();
     
     public override string ToString()

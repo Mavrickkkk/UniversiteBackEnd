@@ -161,7 +161,6 @@ public class BasicBdBuilder(IRepositoryFactory repositoryFactory) : BdBuilder(re
     
     protected override async Task BuildRolesAsync()
     {
-        // Création des rôles dans la table aspnetroles
         await new CreateUniversiteRoleUseCase(repositoryFactory).ExecuteAsync(Roles.Responsable);
         await new CreateUniversiteRoleUseCase(repositoryFactory).ExecuteAsync(Roles.Scolarite);
         await new CreateUniversiteRoleUseCase(repositoryFactory).ExecuteAsync(Roles.Etudiant);
@@ -170,13 +169,11 @@ public class BasicBdBuilder(IRepositoryFactory repositoryFactory) : BdBuilder(re
     protected override async Task BuildUsersAsync()
     {
         CreateUniversiteUserUseCase uc = new CreateUniversiteUserUseCase(repositoryFactory);
-        // Création des étudiants
         foreach (var etudiant in _etudiants)
         {
             await uc.ExecuteAsync(etudiant.Email, etudiant.Email, this.Password, Roles.Etudiant,etudiant);
         }
         
-        // Création des responsbles
         foreach (var user in _usersNonEtudiants)
         {
             await uc.ExecuteAsync(user.Email, user.Email, this.Password, user.Role, null);

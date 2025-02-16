@@ -21,14 +21,12 @@ public class UniversiteDbContext : IdentityDbContext<UniversiteUser>
     
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseLoggerFactory(consoleLogger)  //on lie le contexte avec le système de journalisation
+        optionsBuilder.UseLoggerFactory(consoleLogger)
             .EnableSensitiveDataLogging() 
             .EnableDetailedErrors();
     }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        // Propriétés de la table Etudiant
-        // Clé primaire
         base.OnModelCreating(modelBuilder);
         modelBuilder.Entity<Etudiant>()
             .HasKey(e => e.Id);
@@ -41,8 +39,6 @@ public class UniversiteDbContext : IdentityDbContext<UniversiteUser>
             .HasMany(e => e.NotesObtenues)
             .WithOne(n => n.Etudiant);
         
-        // Propriétés de la table Parcours
-        // Clé primaire
         base.OnModelCreating(modelBuilder);
         modelBuilder.Entity<Parcours>()
             .HasKey(p => p.Id);
@@ -69,8 +65,6 @@ public class UniversiteDbContext : IdentityDbContext<UniversiteUser>
             .HasMany(ue => ue.Notes)
             .WithOne(n => n.Ue);
         
-        // Propriétés de la table Note
-        // Clé primaire composite
         modelBuilder.Entity<Notes>()
             .HasKey(n => new { n.EtudiantId, n.UeId });
         // ManyToOne vers Etudiant
@@ -82,8 +76,6 @@ public class UniversiteDbContext : IdentityDbContext<UniversiteUser>
             .HasOne(n => n.Ue)
             .WithMany(ue => ue.Notes);
         
-        // Propriétés de la table UniversiteUser
-        //OneToOne vers UniversityUser
         modelBuilder.Entity<UniversiteUser>()
             .HasOne<Etudiant>(user => user.Etudiant)
             .WithOne()
@@ -92,7 +84,7 @@ public class UniversiteDbContext : IdentityDbContext<UniversiteUser>
             .HasOne<UniversiteUser>()
             .WithOne(user => user.Etudiant)
             .HasForeignKey<UniversiteUser>(user => user.EtudiantId);
-        // Permet d'inclure automatiquement l'étudiant dans le user sans avoir besoin de préciser la jointure
+
         modelBuilder.Entity<UniversiteUser>().Navigation<Etudiant>(user => user.Etudiant).AutoInclude();
         modelBuilder.Entity<UniversiteRole>();
     }

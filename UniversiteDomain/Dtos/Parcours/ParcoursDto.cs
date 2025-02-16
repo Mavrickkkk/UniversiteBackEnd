@@ -15,7 +15,15 @@ public class ParcoursDto
         this.AnneeFormation = parcours.AnneeFormation;
         return this;
     }
-    
+    public Parcours ToEntity()
+        {
+            return new Parcours
+            {
+                Id = this.Id, 
+                NomParcours = this.NomParcours, 
+                AnneeFormation = this.AnneeFormation
+            };
+        }
     public static List<ParcoursDto> ToDtos(List<Parcours> parcours)
     {
         List<ParcoursDto> dtos = new();
@@ -24,10 +32,5 @@ public class ParcoursDto
             dtos.Add(new ParcoursDto().ToDto(parcour));
         }
         return dtos;
-    }
-    
-    public Parcours ToEntity()
-    {
-        return new Parcours {Id = this.Id, NomParcours = this.NomParcours, AnneeFormation = this.AnneeFormation};
     }
 }

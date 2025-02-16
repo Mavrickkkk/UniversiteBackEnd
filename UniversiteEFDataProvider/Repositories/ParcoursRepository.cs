@@ -8,7 +8,6 @@ namespace UniversiteEFDataProvider.Repositories;
 public class ParcoursRepository(UniversiteDbContext context) : Repository<Parcours>(context), IParcoursRepository
 {
     
-    /* ------ Normal Version (AddEtudiant) ------*/
     public async Task<Parcours> AddEtudiantAsync(long idParcours, long idEtudiant)
     {
         ArgumentNullException.ThrowIfNull(Context.Etudiants);
@@ -25,7 +24,6 @@ public class ParcoursRepository(UniversiteDbContext context) : Repository<Parcou
         return await AddEtudiantAsync(parcours.Id, etudiant.Id);
     }
     
-    /* ------ Lists Version (AddEtudiant) ------*/
     public async Task<Parcours> AddEtudiantAsync(long idParcours, long[] idEtudiants)
     {
         ArgumentNullException.ThrowIfNull(Context.Etudiants);
@@ -51,7 +49,6 @@ public class ParcoursRepository(UniversiteDbContext context) : Repository<Parcou
         return await AddEtudiantAsync(parcours.Id, idEtudiants);
     }
     
-    /* ------ Normal Version (AddUe) ------*/
     public async Task<Parcours> AddUeAsync(long idParcours, long idUe)
     {
         ArgumentNullException.ThrowIfNull(Context.Parcours);
@@ -69,7 +66,6 @@ public class ParcoursRepository(UniversiteDbContext context) : Repository<Parcou
         return await AddUeAsync(parcours.Id, ue.Id);
     }
 
-    /* ------ Lists Version (AddUe) ------*/
     public async Task<Parcours> AddUeAsync(long idParcours, long[] idUe)
     {
         ArgumentNullException.ThrowIfNull(Context.Parcours);

@@ -10,7 +10,6 @@ public class GetUeCompletUseCase(IRepositoryFactory factory)
     {
         await CheckBusinessRules();
         Ue? ues = await factory.UeRepository().FindUeCompletAsync(idUe);
-        //Etudiant? etudiant=await factory.EtudiantRepository().FindAsync(idEtudiant);
         return ues;
     }
     private async Task CheckBusinessRules()

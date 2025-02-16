@@ -13,7 +13,6 @@ public class UpdateUniversiteUserUseCase(IRepositoryFactory factory)
         if (user == null) throw new NullReferenceException("L'utilisateur n'existe pas");
         
         await factory.UniversiteUserRepository().UpdateAsync(user, etudiant.Email, etudiant.Email);
-        //await factory.UniversiteUserRepository().SaveChangesAsync();
     }
     private async Task CheckBusinessRules()
     {
