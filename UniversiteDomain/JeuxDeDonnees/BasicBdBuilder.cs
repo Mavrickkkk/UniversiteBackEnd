@@ -16,13 +16,8 @@ public class BasicBdBuilder(IRepositoryFactory repositoryFactory) : BdBuilder(re
 
     private readonly Etudiant[] _etudiants =
     [
-        new Etudiant { Id=1,NumEtud = "03BDKZ65", Nom = "Dupont", Prenom = "Antoine", Email = "antoine.dupont@etud.u-picardie.fr" },
-        new Etudiant { Id=2,NumEtud = "JEIZ03JZ", Nom = "Ntamak", Prenom = "Romain", Email = "roman.ntamak@etud.u-picardie.fr" },
-        new Etudiant { Id=3,NumEtud = "62830483", Nom = "Barassi", Prenom = "Pierre-Louis", Email = "pierre-louis.barassi@etud.u-picardie.fr" },
-        new Etudiant { Id=4,NumEtud = "J6HZK922", Nom = "Jelong", Prenom = "Antony", Email = "antony.jelong@etud.u-picardie.fr" },
-        new Etudiant { Id=5,NumEtud = "PAD89345", Nom = "Akki", Prenom = "Pita", Email = "pita.akki@etud.u-picardie.fr" },
-        new Etudiant { Id=6,NumEtud = "RG8647FF", Nom = "Mauvaka", Prenom = "Peato", Email = "peato.mauvaka@etud.u-picardie.fr" },
-        new Etudiant { Id=7,NumEtud = "GCLEM740", Nom = "Clement", Prenom = "Delepaut", Email = "delepaut.clement@etud.u-picardie.fr" }
+        new Etudiant { Id=1,NumEtud = "03BDKZ65", Nom = "Bob", Prenom = "Leponge", Email = "bob.leponge@etud.u-picardie.fr" },
+        new Etudiant { Id=2,NumEtud = "03BDKZ65", Nom = "Patrick", Prenom = "Letoile", Email = "patrick.letoile@etud.u-picardie.fr" },
     ];
     private struct UserNonEtudiant
     {
@@ -32,12 +27,7 @@ public class BasicBdBuilder(IRepositoryFactory repositoryFactory) : BdBuilder(re
     }
     private readonly UserNonEtudiant[] _usersNonEtudiants =
     [
-        new UserNonEtudiant { UserName = "anne.lapujade@u-picardie.fr", Email = "anne.lapujade@u-picardie.fr", Role = "Responsable" },
-        new UserNonEtudiant { UserName = "plouisberquez@gmail.com", Email = "plouisberquez@gmail.com", Role = "Responsable" },
-        new UserNonEtudiant { UserName = "jabin.julian.univ@gmail.com", Email = "jabin.julian.univ@gmail.com", Role = "Responsable" },
-        new UserNonEtudiant { UserName = "mehdy.chk@outlook.fr", Email = "mehdy.chk@outlook.fr", Role = "Responsable" },
-        new UserNonEtudiant { UserName = "stephanie.dertin@u-picardie.fr", Email = "stephanie.dertin@u-picardie.fr", Role = "Scolarite" },
-        new UserNonEtudiant { UserName = "ClementDelepaut", Email = "delepaut.clement@gmail.com", Role = "Scolarite" },
+        new UserNonEtudiant { UserName = "marc.brasseur@u-picardie.fr", Email = "marc.brasseur@u-picardie.fr", Role = "Responsable" },
     ];
 
     private readonly Parcours[] _parcours =
@@ -45,15 +35,14 @@ public class BasicBdBuilder(IRepositoryFactory repositoryFactory) : BdBuilder(re
         new Parcours { Id=1,NomParcours = "M1", AnneeFormation = 1 },
         new Parcours { Id=2,NomParcours = "OSIE", AnneeFormation = 2 },
         new Parcours { Id=3,NomParcours = "ITD", AnneeFormation = 2 },
-        new Parcours { Id=4,NomParcours = "IDD", AnneeFormation = 2 }
+        new Parcours { Id=4,NomParcours = "INE", AnneeFormation = 2 }
     ];
 
     private readonly Ue[] _ues =
     [
-        new Ue { Id=1, NumeroUe = "ISI_01", Intitule = "Architecture des SI 1" },
-        new Ue { Id=2, NumeroUe = "ISI_02", Intitule = "Conduite de projet" },
-        new Ue { Id=3, NumeroUe = "GEO_05", Intitule = "Marketing" },
-        new Ue { Id=4, NumeroUe = "INFO_18", Intitule = "Architecture des SI 2" }
+        new Ue { Id=1, NumeroUe = "INFO_4", Intitule = "BDA" },
+        new Ue { Id=2, NumeroUe = "TRANS_1", Intitule = "Anglais" },
+        new Ue { Id=3, NumeroUe = "INFO_1", Intitule = "Marketing" },
     ];
 
     private struct Inscription
@@ -66,12 +55,7 @@ public class BasicBdBuilder(IRepositoryFactory repositoryFactory) : BdBuilder(re
     [
         // EtudiantId, ParcoursId
         new Inscription { EtudiantId = 1, ParcoursId = 2 },
-        new Inscription { EtudiantId = 2, ParcoursId = 1 },
-        new Inscription { EtudiantId = 3, ParcoursId = 1 },
-        new Inscription { EtudiantId = 4, ParcoursId = 1 },
-        new Inscription { EtudiantId = 5, ParcoursId = 3 },
-        new Inscription { EtudiantId = 6, ParcoursId = 4 },
-        new Inscription { EtudiantId = 7, ParcoursId = 4 }
+        new Inscription { EtudiantId = 2, ParcoursId = 2 },
     ];
 
     private struct UeDansParcours
@@ -85,9 +69,6 @@ public class BasicBdBuilder(IRepositoryFactory repositoryFactory) : BdBuilder(re
         new UeDansParcours { UeId = 1, ParcoursId = 1 },
         new UeDansParcours { UeId = 2, ParcoursId = 1 },
         new UeDansParcours { UeId = 3, ParcoursId = 1 },
-        new UeDansParcours { UeId = 4, ParcoursId = 2 },
-        new UeDansParcours { UeId = 4, ParcoursId = 3 },
-        new UeDansParcours { UeId = 4, ParcoursId = 4 }
     ];
     
     private struct Note
@@ -100,13 +81,8 @@ public class BasicBdBuilder(IRepositoryFactory repositoryFactory) : BdBuilder(re
     private readonly Note[] _notes =
     [
         new Note { UeId = 1, EtudiantId = 2, Valeur = 12 },
-        new Note { UeId = 1, EtudiantId = 4, Valeur = 16 },
         new Note { UeId = 2, EtudiantId = 2, Valeur = 14 },
-        new Note { UeId = 2, EtudiantId = 3, Valeur = 6 },
-        new Note { UeId = 3, EtudiantId = 4, Valeur = (float)11.5 },
         new Note { UeId = 4, EtudiantId = 1, Valeur = 10 },
-        new Note { UeId = 4, EtudiantId = 5, Valeur = (float)18.3 },
-        new Note { UeId = 4, EtudiantId = 6, Valeur = 12 }
     ];
     protected override async Task RegenererBdAsync()
     {
